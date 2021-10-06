@@ -9,7 +9,7 @@ FLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 philo: $(SRC) $(INC)
-		gcc $(SRC) $(FLAGS) -o philo
+		gcc $(SRC) -o philo -lpthread 
 
 clean: 
 		rm -rf $(NAME)
