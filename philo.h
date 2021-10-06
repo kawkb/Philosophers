@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 20:00:16 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 18:31:44 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/06 19:25:47 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef     struct  s_philo
 	pthread_t       *id;
 	pthread_mutex_t *fork;
 	pthread_mutex_t print;
+	t_time			*last_time_eated;
 	t_time			start;
 	t_time			time_to_eat;
 	t_time			time_to_sleep;

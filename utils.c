@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:32:19 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 18:19:21 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/06 19:18:57 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	get_input(int ac, char **av, t_philo *philo)
 	}
 	return (0);
 }
+
 int	ft_atoi(const char *str)
 {
 	int		nbr;

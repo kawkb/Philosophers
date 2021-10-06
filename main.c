@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 19:59:38 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 18:57:57 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/06 19:37:36 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ void	zzzz(t_time	time)
 
 void	eating(t_philo *philo)
 {
-	// take forks;
 	pthread_mutex_lock(philo->fork[i]);
 	print(philo, "has taken a fork");
 	pthread_mutex_lock(philo->fork[i + 1]); // tada % philo.nbr;
 	print(philo, "has taken a fork");
 	print(philo, "is eating");
 	zzzz(philo->time_to_eat);
+	philo->last_time_eated = now();
 	pthread_mutex_unlock(philo->fork[i]);
 	pthread_mutex_unlock(philo->fork[i + 1]);
 }
@@ -57,7 +57,16 @@ void	*life_of_a_philo(t_philo *philo)
 	{
 		eating(philo);
 		sleeping(philo);
-		thinking();
+		print(philo, "is thinking");
+	}
+}
+
+void	checker(t_philo *philo)
+{
+	
+	while (philo->last_time_eated[i] < philo->time_to_die) // check i
+	{
+		
 	}
 }
 
@@ -69,6 +78,4 @@ int		main(int ac, char **av)
 		return(1);
 	if (!create(philo))
 		return;
-	checker();
 }
-// eating sleeping thinking
