@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:32:19 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 19:18:57 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/06 22:50:32 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int		create(t_philo *philo)
 	while(i++ <= philo->nbr)
 		pthread_mutex_init(&philo->fork[i], NULL);
     i = 0;
+	pthread_create(philo->supervisor, NULL, &supervise, NULL);
     while (i <= philo->nbr)
 	{
 		pthread_create(philo->id[i], NULL, &life_of_a_philo, NULL);

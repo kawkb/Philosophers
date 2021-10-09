@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 20:00:16 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 19:25:47 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/06 22:49:40 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef	unsigned long t_time;
 typedef     struct  s_philo
 {
 	pthread_t       *id;
+	pthread_t		supervisor;
 	pthread_mutex_t *fork;
 	pthread_mutex_t print;
 	t_time			*last_time_eated;

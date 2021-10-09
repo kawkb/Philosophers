@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 19:59:38 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 19:37:36 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/09 13:08:49 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	zzzz(t_time	time)
 	t_time	this_time;
 
 	this_time = now();
-	usleep((time - 18) * 1000);
+	usleep((time - 20) * 1000);
 	while (now() <= this_time + time)
 		;
 }
@@ -36,7 +36,7 @@ void	eating(t_philo *philo)
 {
 	pthread_mutex_lock(philo->fork[i]);
 	print(philo, "has taken a fork");
-	pthread_mutex_lock(philo->fork[i + 1]); // tada % philo.nbr;
+	pthread_mutex_lock(philo->fork[i + 1]); // ta da % philo.nbr;
 	print(philo, "has taken a fork");
 	print(philo, "is eating");
 	zzzz(philo->time_to_eat);
@@ -69,7 +69,10 @@ void	checker(t_philo *philo)
 		
 	}
 }
-
+int		ft_test()
+{
+	printf("test\n");
+}
 int		main(int ac, char **av)
 {
 	t_philo		*philo;
@@ -79,3 +82,4 @@ int		main(int ac, char **av)
 	if (!create(philo))
 		return;
 }
+
