@@ -12,13 +12,13 @@
 
 #include "philo.h"
 
-void	print(t_philo *philo, char *str)
+void	print(t_philo *philo, char *str, int index)
 {
 	t_time currently;
 
 	currently = now() - philo->start;
 	pthread_mutex_lock(&philo->print);
-	printf("%d time %d id %s\n",currently , philo->id, str);
+	printf("%d time %d id %s\n",currently , index, str);
 	pthread_mutex_unlock(&philo->print);
 }
 
@@ -27,52 +27,79 @@ void	zzzz(t_time	time)
 	t_time	this_time;
 
 	this_time = now();
-	usleep((time - 20) * 1000);
-	while (now() <= this_time + time)
-		;
+	usleep(time  * 1000 * 0.85);
+	while (now() < this_time + time)
+		continue ;
 }
 
-void	eating(t_philo *philo)
+void	eating(t_philo *philo, int index)
 {
-	pthread_mutex_lock(philo->fork[i]);
+	pthread_mutex_lock(philo->fork[index]);
 	print(philo, "has taken a fork");
-	pthread_mutex_lock(philo->fork[i + 1]); // ta da % philo.nbr;
+	pthread_mutex_lock(philo->fork[(index + 1) % philo->nbr); // ta da % philo.nbr;
 	print(philo, "has taken a fork");
+	philo->last_time_eated[index] = now();
 	print(philo, "is eating");
+	philo->is_eating[index] = 1;
 	zzzz(philo->time_to_eat);
-	philo->last_time_eated = now();
-	pthread_mutex_unlock(philo->fork[i]);
-	pthread_mutex_unlock(philo->fork[i + 1]);
+	philo->is_eating[index] = 0;
+	pthread_mutex_unlock(philo->fork[index]);
+	pthread_mutex_unlock(philo->fork[(index + 1) % philo->nbr]);
+	if (philo->check1[index]++ == philo->must_eat_count)
+		check2++;
 }
 
-void	sleeping(t_philo *philo)
+void	sleeping(t_philo *philo, int index)
 {
 	print(philo, "is sleeping");
 	zzzz(philo->time_to_sleep);
 }
 
-void	*life_of_a_philo(t_philo *philo)
+void	*life_of_a_philo(void *philo)
 {
+	int		index;
+
+	philo = (t_philo*)philo;
+	index = philo->index;
 	while (1)
 	{
-		eating(philo);
-		sleeping(philo);
-		print(philo, "is thinking");
+		eating(philo, index);
+		sleeping(philo, index);
+		print(philo, "is thinking", index);
 	}
+}
+
+t_time	time_passed(t_time last_time_eated)
+{
+	retun(now() - last_time_eated);
 }
 
 void	checker(t_philo *philo)
 {
-	
-	while (philo->last_time_eated[i] < philo->time_to_die) // check i
+	int		i;
+
+	i = 0;
+	while(1)
 	{
-		
+		while (i < philo->nbr)
+		{
+			if(must_eat_count >= 0 && philo->check2 >= philo->nbr)
+			{
+				pthread_mutex_lock(&philo->print);
+				return;
+			}
+			if(!philo->is_eating[i] && time_passed(philo->last_time_eated[i]) > philo->time_to_die)
+			{
+				pthread_mutex_lock(&philo->print);
+				printf("%d time %d id died\n", now() -  philo->start, i);
+				return;
+			}
+			i++;
+		}
+		i = 0; 
 	}
 }
-int		ft_test()
-{
-	printf("test\n");
-}
+
 int		main(int ac, char **av)
 {
 	t_philo		*philo;
@@ -81,5 +108,8 @@ int		main(int ac, char **av)
 		return(1);
 	if (!create(philo))
 		return;
+	checker();
+	clear_all();
+	return(0);
 }
 

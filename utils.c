@@ -19,13 +19,30 @@ int		create(t_philo *philo)
 	i = 0;
     philo->id = malloc(sizeof(pthread_t) * philo->nbr);
 	philo->fork = malloc(sizeof(pthread_mutex_t) * philo->nbr);
+	philo->print = malloc(sizeof(pthread_mutex_t));
+	philo->is_eating = malloc(sizeof(int) * philo->nbr);
+	philo->last_time_eated = malloc(sizeof(t_time) * philo->nbr);
+	philo->check1 = malloc(sizeof(int) * philo->nbr);
+	philo->check2 = 0;
+
+	while  (i < philo->nbr)
+	{
+		philo->is_eating[i] = 0;
+		philo->last_time_eated[i] = now();
+		philo->check1[i] = 0;
+		i++;
+	}
+	i = 0;
 	while(i++ <= philo->nbr)
 		pthread_mutex_init(&philo->fork[i], NULL);
     i = 0;
-	pthread_create(philo->supervisor, NULL, &supervise, NULL);
-    while (i <= philo->nbr)
+	//pthread_create(philo->supervisor, NULL, &supervise, NULL);
+	pthread_mutex_init(&philo->print, NULL);
+    while (i < philo->nbr)
 	{
-		pthread_create(philo->id[i], NULL, &life_of_a_philo, NULL);
+		philo->index = i;
+		pthread_create(philo->id[i], NULL, &life_of_a_philo, philo);
+		usleep(100);
 		i++;
 	}
 	retun (0);
@@ -47,6 +64,7 @@ int	get_input(int ac, char **av, t_philo *philo)
 		philo->time_to_eat = ft_atoi(av[3]);
 		philo->time_to_sleep = ft_atoi(av[4]);
         philo->start = now();
+		philo->must_eat_count = -1;
 		if (ac == 6)
 			philo->must_eat_count = ft_atoi(av[5]);
 		if ( philo->nbr == -1 || philo->time_to_die == -1 || philo->time_to_eat == -1
