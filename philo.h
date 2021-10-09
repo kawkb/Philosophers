@@ -32,8 +32,13 @@ typedef     struct  s_philo
 	t_time			time_to_eat;
 	t_time			time_to_sleep;
 	t_time			time_to_die;
-	t_time			must_eat_count;
+	int				*check1;
+	int				check2;
+	int				must_eat_count;
+	int				kayna;
+	int				*is_eating;
 	int             nbr;
+	int				index;
 	
 }                   t_philo;
 
