@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 20:00:16 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 19:25:47 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/10 00:09:53 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef     struct  s_philo
 	t_time			time_to_sleep;
 	t_time			time_to_die;
 	t_time			must_eat_count;
+	int				*index;
 	int             nbr;
 	
 }                   t_philo;

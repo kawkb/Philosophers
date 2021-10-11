@@ -6,7 +6,7 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:32:19 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 19:18:57 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/11 16:06:48 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ int		create(t_philo *philo)
 	i = 0;
     philo->id = malloc(sizeof(pthread_t) * philo->nbr);
 	philo->fork = malloc(sizeof(pthread_mutex_t) * philo->nbr);
+	philo->index = malloc(sizeof(int) * philo->nbr);
 	while(i++ <= philo->nbr)
 		pthread_mutex_init(&philo->fork[i], NULL);
     i = 0;
     while (i <= philo->nbr)
 	{
+		philo->index[i] = i;
 		pthread_create(philo->id[i], NULL, &life_of_a_philo, NULL);
 		i++;
 	}

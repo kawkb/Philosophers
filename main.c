@@ -6,19 +6,19 @@
 /*   By: kdrissi- <kdrissi-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/03 19:59:38 by kdrissi-          #+#    #+#             */
-/*   Updated: 2021/10/06 19:37:36 by kdrissi-         ###   ########.fr       */
+/*   Updated: 2021/10/10 00:08:53 by kdrissi-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print(t_philo *philo, char *str)
+void	print(t_philo *philo, char *str, int index)
 {
 	t_time currently;
 
 	currently = now() - philo->start;
 	pthread_mutex_lock(&philo->print);
-	printf("%d time %d id %s\n",currently , philo->id, str);
+	printf("%d time %d id %s\n",currently , index, str);
 	pthread_mutex_unlock(&philo->print);
 }
 
@@ -27,12 +27,12 @@ void	zzzz(t_time	time)
 	t_time	this_time;
 
 	this_time = now();
-	usleep((time - 18) * 1000);
+	usleep((time * 1000 * 0.85));
 	while (now() <= this_time + time)
 		;
 }
 
-void	eating(t_philo *philo)
+void	eating(t_philo *philo, int index)
 {
 	pthread_mutex_lock(philo->fork[i]);
 	print(philo, "has taken a fork");
@@ -45,16 +45,19 @@ void	eating(t_philo *philo)
 	pthread_mutex_unlock(philo->fork[i + 1]);
 }
 
-void	sleeping(t_philo *philo)
+void	sleeping(t_philo *philo, int index)
 {
-	print(philo, "is sleeping");
+	print(philo, "is sleeping", index);
 	zzzz(philo->time_to_sleep);
 }
 
 void	*life_of_a_philo(t_philo *philo)
 {
+	int		index;
+	
 	while (1)
 	{
+		index = philo->index[i];
 		eating(philo);
 		sleeping(philo);
 		print(philo, "is thinking");
@@ -77,5 +80,8 @@ int		main(int ac, char **av)
 	if (!get_input(ac, av, philo))
 		return(1);
 	if (!create(philo))
-		return;
+		return(1);
+	checker(philo);
+	clear_all(philo);
+	return(0);
 }
